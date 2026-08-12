@@ -1,17 +1,16 @@
 #include <stdio.h>
 #include <unistd.h>
 
-void ft_sort_int_tab(int *tab, int size);
+void *ft_print_memory(void *addr, unsigned int size);
 
 int main(void)
 {
-    int tab[] = {5, 2, 9, 1, 5, 6};
-    int size = sizeof(tab) / sizeof(tab[0]);
-    ft_sort_int_tab(tab, size);
-    for (int i = 0; i < size; i++)
-    {
-        printf("%d ", tab[i]);
-    }
-    printf("\n");
+    char str1[] = "Hello World! How are you? This is a test string with non-printable characters: \x01\x02\x03\x04\x05\x06";
+    char str2[] = "This is a test string with printable characters: Hello World! hksjd wdhe dwehcue";
+
+    ft_print_memory(str1, sizeof(str1) - 1);
+    write(1, "\n", 1);
+    ft_print_memory(str2, sizeof(str2));
+
     return 0;
 }
