@@ -1,38 +1,59 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   ft_atoi.c                                          :+:      :+:    :+:   */
+/*   ft_putnbr_base.c                                   :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: mel-jana <mel-jana@student.1337.ma>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/08/14 23:55:59 by mouad             #+#    #+#             */
-/*   Updated: 2026/08/18 13:49:42 by mel-jana         ###   ########.fr       */
+/*   Updated: 2026/08/18 14:06:20 by mel-jana         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-int	ft_atoi(char *str)
+#include <unistd.h>
+
+int	check_base(char *base)
 {
 	int	i;
-	int	sign;
-	int	result;
+	int	j;
 
 	i = 0;
-	sign = 1;
-	result = 0;
-	while (str[i] == ' ' || (str[i] >= 9 && str[i] <= 13))
+	if (!base[0] || !base[1])
+		return (0);
+	while (base[i])
 	{
+		if (base[i] == '+' || base[i] == '-' || base[i] <= 32 || base[i] == 127)
+			return (0);
+		j = i + 1;
+		while (base[j])
+		{
+			if (base[i] == base[j])
+				return (0);
+			j++;
+		}
 		i++;
 	}
-	while (str[i] == '-' || str[i] == '+')
+	return (i);
+}
+
+void	ft_putnbr_base(int nbr, char *base)
+{
+	int		b_len;
+	long	n;
+
+	b_len = check_base(base);
+	if (b_len >= 2)
 	{
-		if (str[i] == '-')
-			sign *= -1;
-		i++;
+		n = nbr;
+		if (n < 0)
+		{
+			write(1, "-", 1);
+			n = -n;
+		}
+		if (n >= b_len)
+		{
+			ft_putnbr_base(n / b_len, base);
+		}
+		write(1, &base[n % b_len], 1);
 	}
-	while (str[i] >= '0' && str[i] <= '9')
-	{
-		result = (result * 10) + (str[i] - '0');
-		i++;
-	}
-	return (result * sign);
 }
