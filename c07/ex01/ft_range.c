@@ -1,7 +1,7 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   ft_strlcat.c                                       :+:      :+:    :+:   */
+/*   ft_range.c                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: mel-jana <mel-jana@student.1337.ma>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
@@ -10,30 +10,24 @@
 /*                                                                            */
 /* ************************************************************************** */
 
-unsigned int	ft_strlcat(char *dest, char *src, unsigned int size)
-{
-	unsigned int	i;
-	unsigned int	j;
-	unsigned int	len_dest;
-	unsigned int	len_src;
+#include <stdlib.h>
 
+int	*ft_range(int min, int max)
+{
+	int	*arr;
+	int	i;
+
+	if (min >= max)
+		return (NULL);
+	arr = (int *)malloc(sizeof(int) * (max - min));
+	if (!arr)
+		return (NULL);
 	i = 0;
-	while (dest[i] && i < size)
-		i++;
-	len_dest = i;
-	j = 0;
-	while (src[j])
-		j++;
-	len_src = j;
-	if (len_dest == size)
-		return (size + len_src);
-	j = 0;
-	while (src[j] && j < (size - len_dest - 1))
+	while (min < max)
 	{
-		dest[i] = src[j];
+		arr[i] = min;
 		i++;
-		j++;
+		min++;
 	}
-	dest[i] = '\0';
-	return (len_dest + len_src);
+	return (arr);
 }

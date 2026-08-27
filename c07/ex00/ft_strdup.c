@@ -1,7 +1,7 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   ft_strlcat.c                                       :+:      :+:    :+:   */
+/*   ft_strdup.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: mel-jana <mel-jana@student.1337.ma>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
@@ -10,30 +10,32 @@
 /*                                                                            */
 /* ************************************************************************** */
 
-unsigned int	ft_strlcat(char *dest, char *src, unsigned int size)
-{
-	unsigned int	i;
-	unsigned int	j;
-	unsigned int	len_dest;
-	unsigned int	len_src;
+#include <stdlib.h>
 
+int	ft_strlen(char *str)
+{
+	int	len;
+
+	len = 0;
+	while (str[len])
+		len++;
+	return (len);
+}
+
+char	*ft_strdup(char *src)
+{
+	char	*dup;
+	int		i;
+
+	dup = (char *)malloc(sizeof(char) * (ft_strlen(src) + 1));
+	if (!dup)
+		return (NULL);
 	i = 0;
-	while (dest[i] && i < size)
-		i++;
-	len_dest = i;
-	j = 0;
-	while (src[j])
-		j++;
-	len_src = j;
-	if (len_dest == size)
-		return (size + len_src);
-	j = 0;
-	while (src[j] && j < (size - len_dest - 1))
+	while (src[i])
 	{
-		dest[i] = src[j];
+		dup[i] = src[i];
 		i++;
-		j++;
 	}
-	dest[i] = '\0';
-	return (len_dest + len_src);
+	dup[i] = '\0';
+	return (dup);
 }

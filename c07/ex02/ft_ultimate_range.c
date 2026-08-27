@@ -1,7 +1,7 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   ft_strlcat.c                                       :+:      :+:    :+:   */
+/*   ft_ultimate_range.c                                :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: mel-jana <mel-jana@student.1337.ma>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
@@ -10,30 +10,32 @@
 /*                                                                            */
 /* ************************************************************************** */
 
-unsigned int	ft_strlcat(char *dest, char *src, unsigned int size)
-{
-	unsigned int	i;
-	unsigned int	j;
-	unsigned int	len_dest;
-	unsigned int	len_src;
+#include <stdlib.h>
 
-	i = 0;
-	while (dest[i] && i < size)
-		i++;
-	len_dest = i;
-	j = 0;
-	while (src[j])
-		j++;
-	len_src = j;
-	if (len_dest == size)
-		return (size + len_src);
-	j = 0;
-	while (src[j] && j < (size - len_dest - 1))
+int	ft_ultimate_range(int **range, int min, int max)
+{
+	int	i;
+	int	size;
+	int	*arr;
+
+	if (min >= max)
 	{
-		dest[i] = src[j];
-		i++;
-		j++;
+		*range = NULL;
+		return (0);
 	}
-	dest[i] = '\0';
-	return (len_dest + len_src);
+	size = max - min;
+	arr = (int *)malloc(sizeof(int) * size);
+	if (!arr)
+	{
+		*range = NULL;
+		return (-1);
+	}
+	i = 0;
+	while (i < size)
+	{
+		arr[i] = min + i;
+		i++;
+	}
+	*range = arr;
+	return (size);
 }
