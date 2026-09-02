@@ -1,68 +1,65 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   ft_sort_params.c                                   :+:      :+:    :+:   */
+/*   ft_show_tab.c                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: mel-jana <mel-jana@student.1337.ma>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/08/27 02:00:00 by mel-jana          #+#    #+#             */
-/*   Updated: 2026/08/31 14:38:54 by mel-jana         ###   ########.fr       */
+/*   Updated: 2026/09/02 13:46:27 by mel-jana         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
+#include "ft_stock_str.h"
 #include <unistd.h>
 
-int	ft_strcmp(char *s1, char *s2)
+void	ft_putchar(char c)
+{
+	write(1, &c, 1);
+}
+
+void	ft_putstr(char *str)
 {
 	int	i;
 
 	i = 0;
-	while (s1[i] == s2[i] && s1[i] != '\0')
+	while (str[i])
+	{
+		write(1, &str[i], 1);
 		i++;
-	return (s1[i] - s2[i]);
+	}
 }
 
-void	display(char **args, int n)
+void	ft_putnbr(int nb)
+{
+	if (nb == -2147483648)
+	{
+		ft_putstr("-2147483648");
+		return ;
+	}
+	if (nb < 0)
+	{
+		ft_putchar('-');
+		nb = -nb;
+	}
+	if (nb > 9)
+		ft_putnbr(nb / 10);
+	ft_putchar((nb % 10) + '0');
+}
+
+void	ft_show_tab(struct s_stock_str *par)
 {
 	int	i;
-	int	j;
 
-	j = 1;
-	while (j < n)
+	i = 0;
+	while (par[i].str != 0)
 	{
-		i = 0;
-		while (args[j][i] != '\0')
-		{
-			write(1, &args[j][i], 1);
-			i++;
-		}
-		write(1, "\n", 1);
-		j++;
-	}
-}
-
-int	main(int argc, char **argv)
-{
-	int		i;
-	int		j;
-	char	*temp;
-
-	i = 1;
-	while (i < argc - 1)
-	{
-		j = i + 1;
-		while (j < argc)
-		{
-			if (ft_strcmp(argv[i], argv[j]) > 0)
-			{
-				temp = argv[i];
-				argv[i] = argv[j];
-				argv[j] = temp;
-			}
-			j++;
-		}
+		ft_putstr(par[i].str);
+		ft_putchar('\n');
+		ft_putnbr(par[i].size);
+		ft_putchar('\n');
+		ft_putstr(par[i].copy);
+		ft_putchar('\n');
 		i++;
 	}
-	display(argv, argc);
-	return (0);
 }
